@@ -1,7 +1,10 @@
-const { notFoundDiary, notFoundPage } = require('../../errors');
+const { badRequest, notFoundDiary, notFoundPage } = require('../../errors');
 
 class FakeDiaryRepository {
   static async readingDiary(diaryBook, page = 1) {
+    if (!diaryBook) {
+      throw badRequest;
+    }
     if (diaryBook !== 1) {
       throw notFoundDiary;
     }
