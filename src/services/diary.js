@@ -1,6 +1,7 @@
 // error 처리를 어떻게 해야 하는지 물어볼 필요가 있음
 
 const { getLastPage } = require('../utils');
+const { badRequest, notFoundDiary, notFoundPage } = require('../errors');
 
 class DiaryService {
   constructor(diaryModel) {
@@ -39,6 +40,9 @@ class DiaryService {
 
   // 작성된 일기 내용을 본다.
   async readingDiary(diaryBook, page = 1) {
+    if (!diaryBook) {
+      throw badRequest;
+    }
     try {
       return await this.diaryModel.findAll({
         attributes: ['content'],
