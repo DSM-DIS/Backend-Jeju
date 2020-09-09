@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 const DiaryService = require('./fakes/fakeDiaryRepository');
-const { notFoundDiary, notFoundPage } = require('../errors');
+const { badRequest, notFoundDiary, notFoundPage } = require('../errors');
 
 describe('# Diary Service Test', () => {
   describe('# Get page from diary', () => {
@@ -24,9 +24,14 @@ describe('# Diary Service Test', () => {
         notFoundDiary);
     });
 
-    it('Not found Page', async() => {
+    it('Not found Page', async () => {
       await assert.rejects(DiaryService.readingDiary(1, 8),
         notFoundPage);
+    });
+
+    it('It was bad request', async () => {
+      await assert.rejects(DiaryService.readingDiary(),
+        badRequest);
     });
   });
 });
