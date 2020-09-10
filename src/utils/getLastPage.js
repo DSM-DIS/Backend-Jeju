@@ -12,6 +12,7 @@ module.exports = async (diaryModel, diaryBook) => {
     where: { diary_book_id: diaryBook }
   });
 
+  // count 값이 0이라는 것은 해당 일기장이 생성되지 않았다는 것을 의미
   if (!lastPage) {
    throw notFoundDiary; 
   }
