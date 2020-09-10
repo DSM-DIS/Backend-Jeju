@@ -1,4 +1,7 @@
-const assert = require('assert');
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+const { expect } = chai;
 
 const DiaryService = require('./fakes/fakeDiaryRepository');
 const { badRequest, notFoundDiary, notFoundPage } = require('../errors');
@@ -13,25 +16,25 @@ describe('# Diary Service Test', () => {
     it('Get 1 page form diary_book_id = 1', async () => {
       try {
         const result = await DiaryService.readingDiary(1, 1);
-        assert.deepEqual(correct_result, result);
+        expect(result).to.be.deep.equal(correct_result);
       } catch (error) {
-        assert.fail(error.message);
+        expect.fail(error.message);
       }
     });
 
     it('Not found Diary', async () => {
-      await assert.rejects(DiaryService.readingDiary(2, 1),
-        notFoundDiary);
+      await expect(DiaryService.readingDiary(2, 1))
+        .to.be.rejectedWith(notFoundDiary);
     });
 
     it('Not found Page', async () => {
-      await assert.rejects(DiaryService.readingDiary(1, 8),
-        notFoundPage);
+      await expect(DiaryService.readingDiary(1, 8))
+        .to.be.rejectedWith(notFoundPage);
     });
 
     it('It was bad request', async () => {
-      await assert.rejects(DiaryService.readingDiary(),
-        badRequest);
+      await expect(DiaryService.readingDiary())
+        .to.be.rejectedWith(badRequest);
     });
   });
 });
