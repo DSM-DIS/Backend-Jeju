@@ -1,21 +1,26 @@
-const { badRequest, notFoundDiary, notFoundPage } = require('../../errors');
+const { badRequest, notFoundPage } = require('../../errors');
+const { getLastPage } = require('../../utils');
+const { Diary } = require('../../module');
 
 class FakeDiaryRepository {
-  static async readingDiary(diaryBook, page = 1) {
-    if (!diaryBook) {
+  static async readingDiary(diaryBook, page) {
+    if (!diaryBook || !page) {
       throw badRequest;
     }
-    if (diaryBook !== 1) {
-      throw notFoundDiary;
-    }
-    if (page !== 1) {
-      throw notFoundPage;
-    }
-    if (diaryBook === 1 && page === 1) {
+
+    try {
+      const lastPage = await getLastPage(Diary, diaryBook);
+
+      if (page > lastPage) {
+        throw notFoundPage;
+      }
+
       return {
-        page: 1,
+        page: page,
         content: 'test1'
       };
+    } catch (error) {
+      throw error;
     }
   }
 }
