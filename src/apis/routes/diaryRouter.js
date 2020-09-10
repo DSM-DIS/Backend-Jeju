@@ -37,9 +37,12 @@ router.get('/:id/reading', async (req, res, next) => {
 
   try {
     const content = await diaryService.readingDiary(diaryBook, page);
-    res.status(200).json({ page: page, content: content });
+    res.status(200).send({ page: page, content: content });
   } catch (error) {
-    next(error);
+    res.status(error.status).send({
+      message: error.message,
+      cause: error.cause
+    });
   }
 });
 
