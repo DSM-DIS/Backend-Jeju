@@ -1,7 +1,7 @@
 // error 처리를 어떻게 해야 하는지 물어볼 필요가 있음
 
 const { getLastPage } = require('../utils');
-const { badRequest, notFoundDiary, notFoundPage } = require('../errors');
+const { badRequest, notFoundPage, invalidPage } = require('../errors');
 
 class DiaryService {
   constructor(diaryModel) {
@@ -39,20 +39,35 @@ class DiaryService {
   }
 
   // 작성된 일기 내용을 본다.
-  async readingDiary(diaryBook, page = 1) {
-    if (!diaryBook) {
+  async readingDiary(diaryBook, page) {
+    // Bad Request Error handler
+    if (!diaryBook || !page) {
       throw badRequest;
     }
+
+    // page is not a natural number error handler
+    if (page < 1) {
+      throw invalidPage;
+    }
+
     try {
-      return await this.diaryModel.findAll({
-        attributes: ['content'],
-        where: { diary_book_id: diaryBook },
-        offset: page - 1,
-        limit: 1
-      });
+      const lastPage = await getLastPage(this.diaryModel, diaryBook);
+      // Not Found Page Error handler
+      if (page > lastPage) {
+        throw notFoundPage;
+      }
     } catch (error) {
+      // Not Found Diary Error handler
       throw error;
     }
+
+    // Get content from diary database
+    return await this.diaryModel.findAll({
+      attributes: ['content'],
+      where: { diary_book_id: diaryBook },
+      offset: page - 1,
+      limit: 1
+    });
   }
 }
 
