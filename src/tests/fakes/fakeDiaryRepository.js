@@ -1,6 +1,6 @@
 const { badRequest, notFoundPage } = require('../../errors');
 const { getLastPage } = require('../../utils');
-const { Diary } = require('../../module');
+const { Diary } = require('../../repositories');
 
 class FakeDiaryRepository {
   static async readingDiary(diaryBook, page) {

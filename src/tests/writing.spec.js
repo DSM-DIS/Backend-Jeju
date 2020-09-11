@@ -3,12 +3,10 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const { expect } = chai;
 
-const { Diary } = require('../module');
+const { Diary } = require('../repositories');
 const DiaryService = require('../services/diary');
 const diaryService = new DiaryService(Diary);
 const { badRequest } = require('../errors');
-
-const { describe } = require('../module/definitions/user');
 
 describe('# Diary Writing Test', () => {
   it('writing should success', async () => {

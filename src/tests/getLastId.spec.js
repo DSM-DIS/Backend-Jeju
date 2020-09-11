@@ -4,7 +4,7 @@ chai.use(chaiAsPromised);
 const { expect } = chai;
 
 const { getLastId } = require('../utils');
-const { Diary } = require('../module');
+const { Diary } = require('../repositories');
 const { notFoundDiary } = require('../errors');
 
 describe('# print last id', () => {

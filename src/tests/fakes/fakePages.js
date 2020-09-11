@@ -1,5 +1,5 @@
 const { badRequest, notFoundDiary } = require('../../errors');
-const { Diary } = require('../../module');
+const { Diary } = require('../../repositories');
 const { getLastPage } = require('../../utils');
 
 class FakeDiaryPages {
