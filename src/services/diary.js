@@ -1,7 +1,5 @@
-// error 처리를 어떻게 해야 하는지 물어볼 필요가 있음
-
-const { getLastPage } = require('../utils');
 const { badRequest, notFoundPage, invalidPage } = require('../errors');
+const { getLastPage, getLastId } = require('../utils');
 
 class DiaryService {
   constructor(diaryModel) {
@@ -10,26 +8,22 @@ class DiaryService {
 
   // 일기장 소유자가 일기를 작성할 수 있는 페이지를 생성
   async writingDiary(diaryBook, author) {
-    let result = undefined;
-    try {
-      result = await this.diaryModel.create({
-        diary_book_id: diaryBook,
-        author: author
-      });
-      
-      return result.id; // 작성한 일기의 id 반환
-    } catch (error) {
-      throw error;
+    // Bad Request Error Handler
+    if (!diaryBook || !author) {
+      throw badRequest;
     }
+
+    // 단순히 글을 저장할 page만 생성함
+    await this.diaryModel.createPage(diaryBook, author);
   }
 
   // 일기 작성 완료 후 다음 사람에게 일기를 건네줌(교환함)
-  async handingDiary(diaryBook, id, content) {
+  async handingDiary(diaryBook, content) {
     try {
+      const id = getLastId(this.diaryModel, diaryBook);
+
       // id: PRIMARY KEY이지만, 그럼에도 검사를 진행
-      await this.diaryModel.update({ content: content }, {
-        where: { id: id, diary_book_id: diaryBook }
-      });
+      await this.diaryModel.writingDiary(id, content);
 
       // 일기를 넘겨주면 자신이 작성한 일기 page로 redirect하기 위해 page값이 필요
       return getLastPage(this.diaryModel, diaryBook);
@@ -41,33 +35,18 @@ class DiaryService {
   // 작성된 일기 내용을 본다.
   async readingDiary(diaryBook, page) {
     // Bad Request Error handler
-    if (!diaryBook || !page) {
+    if (!diaryBook || !page || page < 1) {
       throw badRequest;
     }
 
-    // page is not a natural number error handler
-    if (page < 1) {
-      throw invalidPage;
+    // Not Found Error handler
+    const lastPage = getLastPage(this.diaryModel, diaryBook);
+    if (page > lastPage) {
+      throw notFoundPage;
     }
-
-    try {
-      const lastPage = await getLastPage(this.diaryModel, diaryBook);
-      // Not Found Page Error handler
-      if (page > lastPage) {
-        throw notFoundPage;
-      }
-    } catch (error) {
-      // Not Found Diary Error handler
-      throw error;
-    }
-
-    // Get content from diary database
-    return await this.diaryModel.findAll({
-      attributes: ['content'],
-      where: { diary_book_id: diaryBook },
-      offset: page - 1,
-      limit: 1
-    });
+    
+    // return content from page that requested in diaryBook that requested.
+    return await this.diaryModel.getContent(diaryBook, page);
   }
 }
 
