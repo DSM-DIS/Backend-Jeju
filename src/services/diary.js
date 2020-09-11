@@ -1,4 +1,4 @@
-const { badRequest, notFoundPage, invalidPage } = require('../errors');
+const { badRequest, notFoundPage } = require('../errors');
 const { getLastPage, getLastId } = require('../utils');
 
 class DiaryService {
