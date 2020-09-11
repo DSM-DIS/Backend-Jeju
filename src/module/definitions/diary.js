@@ -1,7 +1,28 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../loaders/database');
 
-class Diary extends Model {}
+class Diary extends Model {
+  static async createPage(diaryBook, author) {
+    const page =  await Diary.create({
+      diary_book_id: diaryBook,
+      author: author
+    });
+  }
+  
+  static async getContent(diaryBook, page) {
+    return await Diary.findOne({
+      attributes: ['content'],
+      where: { diary_book_id: diaryBook },
+      offset: page - 1
+    });
+  }
+
+  static async writingContent(id, content) {
+    await Diary.update({ content: content }, {
+      where: { id: id }
+    });
+  }
+}
 
 Diary.init({
   id: {
