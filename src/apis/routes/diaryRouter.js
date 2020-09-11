@@ -2,36 +2,42 @@ const router = require('express').Router();
 const qs = require('qs');
 
 const DiaryService = require('../../services/diary');
-const { Diary } = require('../../models');
+const { Diary } = require('../../module');
 const diaryService = new DiaryService(Diary);
 
 // 전반적으로 인증 middleware 필요
-router.get('/:id/writing', async (req, res, next) => {
+router.get('/:id/writing', async (req, res) => {
   const diaryBook = parseInt(req.params.id);
   const { author } = qs.parse(req.query);
 
   try {
-    const id = await diaryService.writingDiary(diaryBook, author);
-    res.status(200).json({ id: id });
+    await diaryService.writingDiary(diaryBook, author);
+    res.status(200).send();
   } catch (error) {
-    next(error);
+    res.status(error.status).send({
+      message: error.message,
+      cause: error.cause
+    });
   }
 });
 
-router.post('/:id/hand', async (req, res, next) => {
+router.post('/:id/hand', async (req, res) => {
   const diaryBook = parseInt(req.params.id);
-  const { id, content } = req.body;
+  const content = req.body.content;
 
   try {
-    const page = await diaryService.handingDiary(diaryBook, id, content);
+    const page = await diaryService.handingDiary(diaryBook, content);
     // owner 변경을 하는 작업 필요
     res.status(302).redirect(`/diary/${diaryBook}/reading?page=${page}`);
   } catch (error) {
-    next(error);
+    res.status(error.status).send({
+      message: error.message,
+      cause: error.cause
+    });
   }
 });
 
-router.get('/:id/reading', async (req, res, next) => {
+router.get('/:id/reading', async (req, res) => {
   const diaryBook = parseInt(req.params.id);
   const page = (req.query.page) ? parseInt(qs.parse(req.query).page) : 1;
 
