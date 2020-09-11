@@ -10,7 +10,7 @@ describe('# GetLastPage util test', () => {
   it('Get diary_book_id = 1 Last Page', async () => {
     try {
       const result = await FakePages.getLastPage(1);
-      expect(result).to.equal(1);
+      expect(result).to.equal(2);
     } catch (error) {
       expect.fail(error.message);
     }
