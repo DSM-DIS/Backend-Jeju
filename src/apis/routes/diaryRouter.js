@@ -2,7 +2,7 @@ const router = require('express').Router();
 const qs = require('qs');
 
 const DiaryService = require('../../services/diary');
-const { Diary } = require('../../module');
+const { Diary } = require('../../repositories');
 const diaryService = new DiaryService(Diary);
 
 // 전반적으로 인증 middleware 필요
