@@ -5,12 +5,17 @@ const DiaryService = require('../../services/diary');
 const { Diary } = require('../../repositories');
 const diaryService = new DiaryService(Diary);
 
+const { badRequest } = require('../../errors');
+
 // 전반적으로 인증 middleware 필요
 router.get('/:id/writing', async (req, res) => {
-  const diaryBook = parseInt(req.params.id);
-  const { author } = qs.parse(req.query);
-
   try {
+    if (!Object.keys(req.query).length) {
+      throw badRequest;
+    }
+    const diaryBook = parseInt(req.params.id);
+    const { author } = qs.parse(req.query);
+
     await diaryService.writingDiary(diaryBook, author);
     res.status(200).send();
   } catch (error) {
