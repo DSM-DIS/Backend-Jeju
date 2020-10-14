@@ -9,7 +9,10 @@ class DiaryService {
   // 일기장 소유자가 일기를 작성할 수 있는 페이지를 생성
   async writingDiary(diaryBook, author) {
     // Bad Request Error Handler
-    if (!diaryBook || !author) {
+    if (typeof diaryBook !== 'number' || diaryBook < 1) {
+      throw badRequest;
+    }
+    if (typeof author !== 'string' || !author) {
       throw badRequest;
     }
 
