@@ -3,7 +3,7 @@ const { sequelize } = require('../../loaders/database');
 
 class Diary extends Model {
   static async createPage(diaryBook, author) {
-    const page =  await Diary.create({
+    await Diary.create({
       diary_book_id: diaryBook,
       author: author
     });
