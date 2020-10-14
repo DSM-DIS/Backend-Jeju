@@ -27,12 +27,16 @@ router.get('/:id/writing', async (req, res) => {
 });
 
 router.post('/:id/hand', async (req, res) => {
-  const diaryBook = parseInt(req.params.id);
-  const content = req.body.content;
-
   try {
+    if (!Object.keys(req.body).length) {
+      throw badRequest;
+    }
+    const diaryBook = parseInt(req.params.id);
+    const { content } = req.body;
+
     const page = await diaryService.handingDiary(diaryBook, content);
     // owner 변경을 하는 작업 필요
+    // redirect API Server에서 해야 하는 일인가?
     res.status(302).redirect(`/diary/${diaryBook}/reading?page=${page}`);
   } catch (error) {
     res.status(error.status).send({
