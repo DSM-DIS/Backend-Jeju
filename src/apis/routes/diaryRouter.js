@@ -47,10 +47,13 @@ router.post('/:id/hand', async (req, res) => {
 });
 
 router.get('/:id/reading', async (req, res) => {
-  const diaryBook = parseInt(req.params.id);
-  const page = (req.query.page) ? parseInt(qs.parse(req.query).page) : 1;
-
   try {
+    if (!Object.keys(req.query).length) {
+      throw badRequest;
+    }
+    const diaryBook = parseInt(req.params.id);
+    const page = (req.query.page) ? parseInt(qs.parse(req.query).page) : 1;
+    
     const content = await diaryService.readingDiary(diaryBook, page);
     res.status(200).send({ page: page, content: content });
   } catch (error) {
