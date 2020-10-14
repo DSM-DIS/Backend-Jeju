@@ -39,18 +39,18 @@ class DiaryService {
 
   // 작성된 일기 내용을 본다.
   async readingDiary(diaryBook, page) {
-    // Bad Request Error handler
-    if (!diaryBook || !page || page < 1) {
+    if (typeof diaryBook !== 'number' || diaryBook < 1) {
+      throw badRequest;
+    }
+    if (typeof page !== 'number' || page < 1) {
       throw badRequest;
     }
 
-    // Not Found Error handler
     const lastPage = getLastPage(this.diaryModel, diaryBook);
     if (page > lastPage) {
       throw notFoundPage;
     }
     
-    // return content from page that requested in diaryBook that requested.
     return await this.diaryModel.getContent(diaryBook, page);
   }
 }
