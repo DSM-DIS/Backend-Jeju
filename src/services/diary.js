@@ -22,17 +22,19 @@ class DiaryService {
 
   // 일기 작성 완료 후 다음 사람에게 일기를 건네줌(교환함)
   async handingDiary(diaryBook, content) {
-    try {
-      const id = getLastId(this.diaryModel, diaryBook);
-
-      // id: PRIMARY KEY이지만, 그럼에도 검사를 진행
-      await this.diaryModel.writingDiary(id, content);
-
-      // 일기를 넘겨주면 자신이 작성한 일기 page로 redirect하기 위해 page값이 필요
-      return getLastPage(this.diaryModel, diaryBook);
-    } catch (error) {
-      throw error;
+    if (typeof diaryBook !== 'number' || diaryBook < 1) {
+      throw badRequest;
     }
+    if (typeof content !== 'string' || !content) {
+      throw badRequest;
+    }
+    const id = getLastId(this.diaryModel, diaryBook);
+
+    // id: PRIMARY KEY이지만, 그럼에도 검사를 진행
+    await this.diaryModel.writingDiary(id, content);
+
+    // 일기를 넘겨주면 자신이 작성한 일기 page로 redirect하기 위해 page값이 필요
+    return getLastPage(this.diaryModel, diaryBook);
   }
 
   // 작성된 일기 내용을 본다.
