@@ -1,5 +1,5 @@
 const axios = require('axios').default;
-const { FORBIDDEN } = require('../errors');
+const { INVALID_TOKEN, FORBIDDEN } = require('../errors');
 
 const isUserDiaryBook = async (userId, diaryBookId) => {
   const res = await axios.get('/user/diary-books', {
@@ -8,7 +8,7 @@ const isUserDiaryBook = async (userId, diaryBookId) => {
     }
   });
   if (res.status === 403) {
-    throw FORBIDDEN;
+    throw INVALID_TOKEN;
   }
 
   for (const diaryBook of res.diaryBooks) {
