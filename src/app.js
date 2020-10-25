@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-const initApp = require('./src/loaders');
+const initApp = require('./loaders');
 
 initApp(app);
 
