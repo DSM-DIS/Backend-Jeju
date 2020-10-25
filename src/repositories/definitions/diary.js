@@ -1,28 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../loaders/database');
 
-class Diary extends Model {
-  static async createPage(diaryBook, author) {
-    await Diary.create({
-      diary_book_id: diaryBook,
-      author: author
-    });
-  }
-  
-  static async getContent(diaryBook, page) {
-    return await Diary.findOne({
-      attributes: ['content'],
-      where: { diary_book_id: diaryBook },
-      offset: page - 1
-    });
-  }
-
-  static async writingContent(id, content) {
-    await Diary.update({ content: content }, {
-      where: { id: id }
-    });
-  }
-}
+class Diary extends Model {}
 
 Diary.init({
   id: {
@@ -39,7 +18,14 @@ Diary.init({
     type: DataTypes.STRING(12),
     allowNull: false
   },
-  content: DataTypes.STRING(240)
+  content: {
+    type: DataTypes.STRING(240),
+    allowNull: false
+  },
+  page: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  }
 }, {
   sequelize,
   tableName: 'diary'
