@@ -1,57 +1,24 @@
-const { badRequest, notFoundPage } = require('../errors');
-const { getLastPage, getLastId } = require('../utils');
+const axios = require('axios').default;
+const { BAD_REQUEST, NOT_FOUND } = require('../errors');
 
 class DiaryService {
   constructor(diaryModel) {
     this.diaryModel = diaryModel;
   }
 
-  // 일기장 소유자가 일기를 작성할 수 있는 페이지를 생성
-  async writingDiary(diaryBook, author) {
-    // Bad Request Error Handler
-    if (typeof diaryBook !== 'number' || diaryBook < 1) {
-      throw badRequest;
-    }
-    if (typeof author !== 'string' || !author) {
-      throw badRequest;
+  getDiary = async (diaryBookId, page) => {
+    const res = await axios.get(`/repositories/diary-book/${diaryBookId}?page=${page}`);
+
+    if (res.status === 400) {
+      throw BAD_REQUEST;
+    } else if (res.status === 404) {
+      throw NOT_FOUND;
     }
 
-    // 단순히 글을 저장할 page만 생성함
-    await this.diaryModel.createPage(diaryBook, author);
-  }
-
-  // 일기 작성 완료 후 다음 사람에게 일기를 건네줌(교환함)
-  async handingDiary(diaryBook, content) {
-    if (typeof diaryBook !== 'number' || diaryBook < 1) {
-      throw badRequest;
-    }
-    if (typeof content !== 'string' || !content) {
-      throw badRequest;
-    }
-    const id = getLastId(this.diaryModel, diaryBook);
-
-    // id: PRIMARY KEY이지만, 그럼에도 검사를 진행
-    await this.diaryModel.writingDiary(id, content);
-
-    // 일기를 넘겨주면 자신이 작성한 일기 page로 redirect하기 위해 page값이 필요
-    return getLastPage(this.diaryModel, diaryBook);
-  }
-
-  // 작성된 일기 내용을 본다.
-  async readingDiary(diaryBook, page) {
-    if (typeof diaryBook !== 'number' || diaryBook < 1) {
-      throw badRequest;
-    }
-    if (typeof page !== 'number' || page < 1) {
-      throw badRequest;
-    }
-
-    const lastPage = getLastPage(this.diaryModel, diaryBook);
-    if (page > lastPage) {
-      throw notFoundPage;
-    }
-    
-    return await this.diaryModel.getContent(diaryBook, page);
+    return {
+      page: res.page,
+      content: res.content
+    };
   }
 }
 
