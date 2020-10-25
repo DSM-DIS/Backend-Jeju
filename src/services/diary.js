@@ -7,6 +7,13 @@ class DiaryService {
   }
 
   getDiary = async (diaryBookId, page) => {
+    if (typeof diaryBookId !== 'number' || diaryBookId < 1) {
+      throw BAD_REQUEST;
+    }
+    if (typeof page !== 'number' || page < 1) {
+      throw BAD_REQUEST;
+    }
+    
     const res = await axios.get(`/repositories/diary-book/${diaryBookId}?page=${page}`);
 
     if (res.status === 400) {
