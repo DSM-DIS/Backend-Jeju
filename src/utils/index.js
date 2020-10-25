@@ -1,7 +1,7 @@
 const isAlrightId = require('./isAlrightId');
-const isCreatedDiaryBook = require('./isCreatedDiaryBook');
+const isUserDiaryBook = require('./isUserDiaryBook');
 
 module.exports = {
   isAlrightId,
-  isCreatedDiaryBook
+  isUserDiaryBook
 };
