@@ -1,7 +1,7 @@
 const axios = require('axios').default;
 const { FORBIDDEN } = require('../errors');
 
-const isCreatedDiaryBook = async (userId, diaryBookId) => {
+const isUserDiaryBook = async (userId, diaryBookId) => {
   const res = await axios.get('/user/diary-books', {
     headers: {
       Authorization: userId
@@ -19,4 +19,4 @@ const isCreatedDiaryBook = async (userId, diaryBookId) => {
   return false;
 };
 
-module.exports = isCreatedDiaryBook;
+module.exports = isUserDiaryBook;
