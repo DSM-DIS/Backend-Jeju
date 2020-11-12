@@ -3,18 +3,18 @@ const DiaryService = require('../../services/diary');
 const diaryService = new DiaryService(Diary);
 
 const { BAD_REQUEST, FORBIDDEN } = require('../../errors');
-const { isAlrightId, isCreatedDiaryBook } = require('../../utils');
+const { isIntegerArg, isUserDiaryBook } = require('../../utils');
 
 const getDiary = async (req, res) => {
   try {
-    const userId =  req.headers.Authorization;
+    const userId =  req.headers.userId;
     const diaryBookId = parseInt(req.params.id);
     const page = parseInt(req.params.page);
 
-    if (!isAlrightId(userId) || isNaN(diaryBookId) || isNaN(page)) {
+    if (!isIntegerArg(diaryBookId) || !isIntegerArg(page)) {
       throw BAD_REQUEST;
     }
-    if (!await isCreatedDiaryBook(userId, diaryBookId)) {
+    if (!await isUserDiaryBook(userId, diaryBookId)) {
       throw FORBIDDEN;
     }
 
