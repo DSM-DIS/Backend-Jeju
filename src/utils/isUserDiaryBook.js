@@ -7,9 +7,6 @@ const isUserDiaryBook = async (userId, diaryBookId) => {
       Authorization: userId
     }
   });
-  if (res.status === 403) {
-    throw INVALID_TOKEN;
-  }
 
   for (const diaryBook of res.diaryBooks) {
     if (diaryBook.id === diaryBookId) {
