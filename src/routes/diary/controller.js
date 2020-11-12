@@ -21,8 +21,9 @@ const getDiary = async (req, res) => {
     const resData = await diaryService.getDiary(diaryBookId, page);
     res.send(resData);
   } catch (error) {
-    res.status(error.status).send({
-      message: error
+    res.send({
+      status: error.status ? error.status : 500,
+      message: error.message
     });
   }
 };
