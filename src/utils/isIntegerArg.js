@@ -1,7 +1,7 @@
 function isIntegerArg(num) {
   const isFloatExp = /[*.*]/;
 
-  return !isFloatExp.test(num) || isNaN(num);
+  return isNaN(num) || !isFloatExp.test(num) || num < 1;
 }
 
 module.exports = isIntegerArg;
