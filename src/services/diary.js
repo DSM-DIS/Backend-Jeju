@@ -4,7 +4,7 @@ const { isIntegerArg, isStringArg } = require('../utils');
 const { BAD_REQUEST, NOT_FOUND_DIARY_BOOK, NOT_FOUND_PAGE } = require('../errors');
 
 class DiaryService {
-  getDiary = async (diaryBookId, page) => {
+  async getDiary(diaryBookId, page) {
     if (!isIntegerArg(diaryBookId) || !isIntegerArg(page)) {
       throw BAD_REQUEST;
     }
@@ -27,7 +27,7 @@ class DiaryService {
     };
   }
 
-  writingDiary = async (userId, diaryBookId, content) => {
+  async writingDiary(userId, diaryBookId, content) {
     if (!isIntegerArg(diaryBookId) || !isStringArg(content) || content.length > AUTHOR_LEN) {
       throw BAD_REQUEST;
     }
