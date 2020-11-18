@@ -1,6 +1,5 @@
-const { Diary } = require('../../repositories');
 const DiaryService = require('../../services/diary');
-const diaryService = new DiaryService(Diary);
+const diaryService = new DiaryService();
 
 const { BAD_REQUEST, FORBIDDEN } = require('../../errors');
 const { isIntegerArg, isUserDiaryBook } = require('../../utils');
