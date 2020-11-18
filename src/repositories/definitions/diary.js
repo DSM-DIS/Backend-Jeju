@@ -1,5 +1,6 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../loaders/database');
+const { AUTHOR_LEN, CONTENT_LEN } = require('../../configs/attribute');
 
 class Diary extends Model {}
 
@@ -15,11 +16,11 @@ Diary.init({
     allowNull: false
   },
   author: {
-    type: DataTypes.STRING(12),
+    type: DataTypes.STRING(AUTHOR_LEN),
     allowNull: false
   },
   content: {
-    type: DataTypes.STRING(240),
+    type: DataTypes.STRING(CONTENT_LEN),
     allowNull: false
   },
   page: {
