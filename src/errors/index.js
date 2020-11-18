@@ -1,18 +1,21 @@
 class HttpError extends Error {
-  constructor(status, message) {
+  constructor(status, message, cause) {
     super(message);
     this.status = status;
+    this.cause = cause;
   }
 }
 
 const BAD_REQUEST = new HttpError(400, 'Invalid parameters supplied');
-const INVALID_TOKEN = new HttpError(403, 'Invalid Token');
-const FORBIDDEN = new HttpError(403, 'Forbidden user access');
-const NOT_FOUND = new HttpError(404, 'Not found');
+const FORBIDDEN_DIARY_BOOK = new HttpError(403, 'Forbidden user access', 'diary book');
+const FORBIDDEN_PAGE = new HttpError(403, 'Forbidden user access', 'page');
+const NOT_FOUND_DIARY_BOOK = new HttpError(404, 'Not found', 'diary book');
+const NOT_FOUND_PAGE = new HttpError(404, 'Not found', 'page');
 
 module.exports = {
   BAD_REQUEST,
-  INVALID_TOKEN,
-  FORBIDDEN,
-  NOT_FOUND
+  FORBIDDEN_DIARY_BOOK,
+  FORBIDDEN_PAGE,
+  NOT_FOUND_DIARY_BOOK,
+  NOT_FOUND_PAGE
 };
