@@ -3,8 +3,8 @@ const { AUTHOR_LEN } = require('../configs/attribute');
 const { isIntegerArg, isStringArg } = require('../utils');
 const { BAD_REQUEST, NOT_FOUND_DIARY_BOOK, NOT_FOUND_PAGE } = require('../errors');
 
-function DiaryService() {
-  this.getDiary = async function (diaryBookId, page) {
+class DiaryService {
+  getDiary = async (diaryBookId, page) => {
     if (!isIntegerArg(diaryBookId) || !isIntegerArg(page)) {
       throw BAD_REQUEST;
     }
@@ -27,7 +27,7 @@ function DiaryService() {
     };
   }
 
-  this.writingDiary = async function (userId, diaryBookId, content) {
+  writingDiary = async (userId, diaryBookId, content) => {
     if (!isIntegerArg(diaryBookId) || !isStringArg(content) || content.length > AUTHOR_LEN) {
       throw BAD_REQUEST;
     }
