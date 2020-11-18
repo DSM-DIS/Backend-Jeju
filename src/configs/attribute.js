@@ -1,4 +1,4 @@
 module.exports = {
-  authorLen: 12,
-  contentLen: 240
+  AUTHOR_LEN: 12,
+  CONTENT_LEN: 240
 };
