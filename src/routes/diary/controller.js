@@ -1,8 +1,8 @@
 const DiaryService = require('../../services/diary');
 const diaryService = new DiaryService();
 
-const { BAD_REQUEST, FORBIDDEN } = require('../../errors');
-const { isIntegerArg, isUserDiaryBook } = require('../../utils');
+const { BAD_REQUEST, FORBIDDEN, NOT_FOUND_DIARY_BOOK } = require('../../errors');
+const { isIntegerArg, isCreatedDiaryBook, isUserDiaryBook } = require('../../utils');
 
 const getDiary = async (req, res) => {
   try {
@@ -12,6 +12,9 @@ const getDiary = async (req, res) => {
 
     if (!isIntegerArg(diaryBookId) || !isIntegerArg(page)) {
       throw BAD_REQUEST;
+    }
+    if (!await isCreatedDiaryBook(diaryBookId)) {
+      throw NOT_FOUND_DIARY_BOOK;
     }
     if (!await isUserDiaryBook(userId, diaryBookId)) {
       throw FORBIDDEN;
