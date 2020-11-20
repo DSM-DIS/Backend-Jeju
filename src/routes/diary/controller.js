@@ -44,8 +44,9 @@ const writingDiary = async (req, res) => {
     await diaryService.writingDiary(userId, diaryBookId, content);
     res.status(201).send();
   } catch (error) {
-    res.status(error.status).send({
-      message: error.message
+    res.send({
+      status: error.status ? error.status : 500,
+      message: error.status ? error.message : 'Internal server error'
     });
   }
 };
