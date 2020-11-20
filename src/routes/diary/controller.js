@@ -1,8 +1,8 @@
 const DiaryService = require('../../services/diary');
 const diaryService = new DiaryService();
 
-const { BAD_REQUEST, NOT_FOUND_DIARY_BOOK } = require('../../errors');
-const { isIntegerArg, isStringArg, isCreatedDiaryBook, isUserDiaryBook } = require('../../utils');
+const { BAD_REQUEST } = require('../../errors');
+const { isIntegerArg, isStringArg } = require('../../utils');
 
 const getDiary = async (req, res) => {
   try {
@@ -36,9 +36,6 @@ const writingDiary = async (req, res) => {
 
     if (!isIntegerArg(diaryBookId) || !isStringArg(content)) {
       throw BAD_REQUEST;
-    }
-    if (!await isCreatedDiaryBook(diaryBookId)) {
-      throw NOT_FOUND_DIARY_BOOK;
     }
 
     await diaryService.writingDiary(userId, diaryBookId, content);
