@@ -1,26 +1,36 @@
 const axios = require('axios').default;
 const { AUTHOR_LEN } = require('../configs/attribute');
 const { isIntegerArg, isStringArg, isCreatedDiaryBook, isUserDiaryBook } = require('../utils');
-const { BAD_REQUEST, NOT_FOUND_DIARY_BOOK, NOT_FOUND_PAGE } = require('../errors');
+const errors = require('../errors');
 
 class DiaryService {
   async getDiary(userId, diaryBookId, page) {
     if (!await isCreatedDiaryBook(diaryBookId)) {
-      throw NOT_FOUND_DIARY_BOOK;
+      throw errors.NOT_FOUND_DIARY_BOOK;
     }
     if (!await isUserDiaryBook(userId, diaryBookId)) {
-      throw FORBIDDEN;
+      throw errors.FORBIDDEN_DIARY_BOOK;
     }
 
-    const res = await axios.get(`/repositories/diary-book/${diaryBookId}?page=${page}`);
+    const res = await axios.get(`/repositories/diary-book/${diaryBookId}?page=${page}`, {
+      headers: {
+        userId: userId
+      }
+    });
 
     if (res.status === 400) {
-      throw BAD_REQUEST;
+      throw errors.BAD_REQUEST;
+    } else if (res.status === 403) {
+      if (res.cause === 'diary book') {
+        throw errors.FORBIDDEN_DIARY_BOOK;
+      } else if (res.cause === 'page') {
+        throw errors.FORBIDDEN_PAGE;
+      }
     } else if (res.status === 404) {
       if (res.cause === 'diary book') {
-        throw NOT_FOUND_DIARY_BOOK;
+        throw errors.NOT_FOUND_DIARY_BOOK;
       } else if (res.cause === 'page') {
-        throw NOT_FOUND_PAGE;
+        throw errors.NOT_FOUND_PAGE;
       }
     }
     
