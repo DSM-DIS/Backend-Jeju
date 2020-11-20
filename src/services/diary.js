@@ -1,6 +1,6 @@
 const axios = require('axios').default;
 const { AUTHOR_LEN } = require('../configs/attribute');
-const { isIntegerArg, isStringArg, isCreatedDiaryBook, isUserDiaryBook } = require('../utils');
+const { isCreatedDiaryBook, isUserDiaryBook } = require('../utils');
 const errors = require('../errors');
 
 class DiaryService {
@@ -41,8 +41,11 @@ class DiaryService {
   }
 
   async writingDiary(userId, diaryBookId, content) {
-    if (!isIntegerArg(diaryBookId) || !isStringArg(content) || content.length > AUTHOR_LEN) {
-      throw BAD_REQUEST;
+    if (content.length > AUTHOR_LEN) {
+      throw errors.BAD_REQUEST;
+    }
+    if (!await isCreatedDiaryBook(diaryBookId)) {
+      throw errors.NOT_FOUND_DIARY_BOOK;
     }
 
     const res = await axios.post(`/repositories/diary`, {
