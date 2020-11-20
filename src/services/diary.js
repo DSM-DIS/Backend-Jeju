@@ -1,12 +1,15 @@
 const axios = require('axios').default;
 const { AUTHOR_LEN } = require('../configs/attribute');
-const { isIntegerArg, isStringArg } = require('../utils');
+const { isIntegerArg, isStringArg, isCreatedDiaryBook, isUserDiaryBook } = require('../utils');
 const { BAD_REQUEST, NOT_FOUND_DIARY_BOOK, NOT_FOUND_PAGE } = require('../errors');
 
 class DiaryService {
-  async getDiary(diaryBookId, page) {
-    if (!isIntegerArg(diaryBookId) || !isIntegerArg(page)) {
-      throw BAD_REQUEST;
+  async getDiary(userId, diaryBookId, page) {
+    if (!await isCreatedDiaryBook(diaryBookId)) {
+      throw NOT_FOUND_DIARY_BOOK;
+    }
+    if (!await isUserDiaryBook(userId, diaryBookId)) {
+      throw FORBIDDEN;
     }
 
     const res = await axios.get(`/repositories/diary-book/${diaryBookId}?page=${page}`);
