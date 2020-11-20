@@ -1,7 +1,7 @@
 const DiaryService = require('../../services/diary');
 const diaryService = new DiaryService();
 
-const { BAD_REQUEST, FORBIDDEN, NOT_FOUND_DIARY_BOOK } = require('../../errors');
+const { BAD_REQUEST, NOT_FOUND_DIARY_BOOK } = require('../../errors');
 const { isIntegerArg, isStringArg, isCreatedDiaryBook, isUserDiaryBook } = require('../../utils');
 
 const getDiary = async (req, res) => {
@@ -13,19 +13,13 @@ const getDiary = async (req, res) => {
     if (!isIntegerArg(diaryBookId) || !isIntegerArg(page)) {
       throw BAD_REQUEST;
     }
-    if (!await isCreatedDiaryBook(diaryBookId)) {
-      throw NOT_FOUND_DIARY_BOOK;
-    }
-    if (!await isUserDiaryBook(userId, diaryBookId)) {
-      throw FORBIDDEN;
-    }
 
-    const resData = await diaryService.getDiary(diaryBookId, page);
+    const resData = await diaryService.getDiary(userId, diaryBookId, page);
     res.send(resData);
   } catch (error) {
     res.send({
       status: error.status ? error.status : 500,
-      message: error.message
+      message: error.status ? error.message : 'Internal server error'
     });
   }
 };
