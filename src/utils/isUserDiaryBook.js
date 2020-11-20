@@ -1,9 +1,9 @@
 const axios = require('axios').default;
 
 const isUserDiaryBook = async (userId, diaryBookId) => {
-  const res = await axios.get('/user/diary-books', {
+  const res = await axios.get('/repositories/diary-book', {
     headers: {
-      Authorization: userId
+      id: userId
     }
   });
 
