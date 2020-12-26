@@ -2,7 +2,7 @@ const axios = require('axios').default;
 const { ForbiddenDiaryBook } = require('../errors');
 const { checkDiaryBook } = require('../');
 
-const checkUser = async (userId, diaryBookId) => {
+const checkYourDiary = async (userId, diaryBookId) => {
   checkDiaryBook(diaryBookId);
 
   const res = await axios.get('/repositories/diary-book', {
@@ -19,4 +19,4 @@ const checkUser = async (userId, diaryBookId) => {
   throw ForbiddenDiaryBook;
 };
 
-module.exports = checkUser;
+module.exports = checkYourDiary;
