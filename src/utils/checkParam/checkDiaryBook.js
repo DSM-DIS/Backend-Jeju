@@ -1,5 +1,4 @@
 const axios = require('axios').default;
-const { BadRequest, NotFoundDiaryBook } = require('../../errors');
 const { checkIntegerArg, httpErrorHandler } = require('../');
 
 const checkDiaryBook = async (diaryBookId) => {
