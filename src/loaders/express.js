@@ -1,13 +1,21 @@
-const express = require('express');
-const cors = require('cors');
+import * as express from "express";
+import cors from "cors";
+import router from "../routes";
+import { NotFoundApi } from "../errors";
 
-const router = require('../routes');
-
-module.exports = (app) => {
-  app.use(cors); // CORS 허용
+export default (app) => {
+  app.use(cors());
   app.use(express.json());
-  // 내부적으로 qs module을 사용하도록 설정
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.urlencoded({ extended: false }));
 
   app.use('/', router);
+  app.use((req, res, next) => {
+    next(NotFoundApi);
+  });
+  app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.json({
+      message: err.message
+    });
+  });
 };
