@@ -1,6 +1,6 @@
 const axios = require('axios').default;
-
-const isUserDiaryBook = async (userId, diaryBookId) => {
+const { ForbiddenDiaryBook } = require('../errors');
+const checkUser = async (userId, diaryBookId) => {
   const res = await axios.get('/repositories/diary-book', {
     headers: {
       id: userId
@@ -12,7 +12,7 @@ const isUserDiaryBook = async (userId, diaryBookId) => {
       return true;
     }
   }
-  return false;
+  throw ForbiddenDiaryBook;
 };
 
-module.exports = isUserDiaryBook;
+module.exports = checkUser;
