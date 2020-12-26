@@ -1,5 +1,5 @@
 const axios = require('axios').default;
-const { ForbiddenDiaryBook } = require('../errors');
+const { ForbiddenDiaryBook } = require('../../errors');
 const { checkDiaryBook } = require('../');
 
 const checkYourDiary = async (userId, diaryBookId) => {
