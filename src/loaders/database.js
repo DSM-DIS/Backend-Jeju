@@ -1,29 +1,29 @@
-const { Sequelize } = require('sequelize');
-const { DB_HOST, DB_DBNAME, DB_USER, DB_PASSWORD } = require('../configs');
+import { Sequelize } from "sequelize";
+import * as config from "../configs";
 
 // connecting to a database
-const sequelize = new Sequelize(DB_DBNAME, DB_USER, DB_PASSWORD, {
-  define: {
-    // 모든 테이블 이름을 복수형이 아닌 model을 설정할 때 설정한 이름으로 사용할 수 있다.
-    freezeTableName: true,
-    // createdAt, updateAt이 자동으로 생성되는 것을 막을 수 있다.
-    timestamps: false
-  },
-  host: DB_HOST,
-  dialect: 'mysql'
-});
+export const sequelize = new Sequelize(
+  config.mysql.name,
+  config.mysql.username,
+  config.mysql.password,
+  {
+    host: config.mysql.host,
+    dialect: 'mysql',
+    define: {
+      // 모든 테이블 이름을 복수형이 아닌 model을 설정할 때 설정한 이름으로 사용할 수 있다.
+      freezeTableName: true,
+      // createdAt, updateAt이 자동으로 생성되는 것을 막을 수 있다.
+      timestamps: false
+    }
+  }
+);
 
 // test the connection
-async function connectDatabase() {
+export default async () => {
   try{
     await sequelize.authenticate();
-    console.log('success to connect the database.');
   } catch (error) {
-    throw error;
+    console.log(`mysql connection error: ${error.message}`);
+    process.exit(1);
   }
-}
-
-module.exports = {
-  sequelize,
-  connectDatabase
 };
