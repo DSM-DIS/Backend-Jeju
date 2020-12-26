@@ -1,6 +1,10 @@
 const axios = require('axios').default;
 const { ForbiddenDiaryBook } = require('../errors');
+const { checkDiaryBook } = require('../');
+
 const checkUser = async (userId, diaryBookId) => {
+  checkDiaryBook(diaryBookId);
+
   const res = await axios.get('/repositories/diary-book', {
     headers: {
       id: userId
@@ -9,7 +13,7 @@ const checkUser = async (userId, diaryBookId) => {
 
   for (const diaryBook of res.diaryBooks) {
     if (diaryBook.id === diaryBookId) {
-      return true;
+      return;
     }
   }
   throw ForbiddenDiaryBook;

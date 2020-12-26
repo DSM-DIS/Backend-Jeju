@@ -1,15 +1,15 @@
-const checkUser = require('./checkUser');
-const checkDiaryBookId = require('./checkDiaryBookId');
-const isIntegerArg = require('./isIntegerArg');
-const isStringArg = require('./isStringArg');
-const isOwner = require('./isOwner');
+const checkIntegerArg = require('./checkParam/checkIntegerArg');
+const checkStringArg = require('./checkParam/checkStringArg');
+const checkDiaryBook = require('./checkParam/checkDiaryBook');
+const checkOwner = require('./checkParam/checkOwner');
+const checkUser = require('./checkParam/checkUser');
 const httpErrorHandler = require('./httpErrorHandler');
 
 module.exports = {
+  checkIntegerArg,
+  checkStringArg,
+  checkDiaryBook,
+  checkOwner,
   checkUser,
-  checkDiaryBookId,
-  isIntegerArg,
-  isStringArg,
-  isOwner,
   httpErrorHandler
 };
