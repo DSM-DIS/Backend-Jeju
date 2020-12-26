@@ -1,21 +1,8 @@
-class HttpError extends Error {
-  constructor(status, message, cause) {
-    super(message);
-    this.status = status;
-    this.cause = cause;
-  }
-}
+import HttpError from "./httpError";
 
-const BAD_REQUEST = new HttpError(400, 'Invalid parameters supplied');
-const FORBIDDEN_DIARY_BOOK = new HttpError(403, 'Forbidden user access', 'diary book');
-const FORBIDDEN_PAGE = new HttpError(403, 'Forbidden user access', 'page');
-const NOT_FOUND_DIARY_BOOK = new HttpError(404, 'Not found', 'diary book');
-const NOT_FOUND_PAGE = new HttpError(404, 'Not found', 'page');
-
-module.exports = {
-  BAD_REQUEST,
-  FORBIDDEN_DIARY_BOOK,
-  FORBIDDEN_PAGE,
-  NOT_FOUND_DIARY_BOOK,
-  NOT_FOUND_PAGE
-};
+export const BadRequest = new HttpError(400, "Bad Request");
+export const ForbiddenDiaryBook = new HttpError(403, "Forbidden", "diary book");
+export const ForbiddenPage = new HttpError(403, "Forbidden", "page");
+export const NotFoundApi = new HttpError(404, "Not Found");
+export const NotFoundDiaryBook = new HttpError(404, "Not Found", "diary book");
+export const NotFoundPage = new HttpError(404, "Not Found", "page");
