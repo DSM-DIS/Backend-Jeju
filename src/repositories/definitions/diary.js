@@ -1,6 +1,5 @@
-const { DataTypes, Model } = require('sequelize');
-const { sequelize } = require('../../loaders/database');
-const { AUTHOR_LEN, CONTENT_LEN } = require('../../configs/attribute');
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../../loaders/database";
 
 class Diary extends Model {}
 
@@ -32,4 +31,4 @@ Diary.init({
   tableName: 'diary'
 });
 
-module.exports = Diary;
+export default Diary;
