@@ -22,6 +22,10 @@ const httpErrorHandler = (status, cause) => {
       throw error.NotFoundApi;
     }
   }
+  
+  if (status === 500) {
+    throw error.InternalServer;
+  }
 };
 
 module.exports = httpErrorHandler;
