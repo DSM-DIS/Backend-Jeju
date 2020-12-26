@@ -1,7 +1,6 @@
 const router = require('express')();
-const controller = require('../controller/diary');
+const diary = require('./diary');
 
-router.get('/:page', controller.getDiary);
-router.post('/', controller.writingDiary);
+router.use('/diary-book/:id/diary', diary);
 
 module.exports = router;
