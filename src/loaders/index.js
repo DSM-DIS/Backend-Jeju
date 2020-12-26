@@ -1,7 +1,9 @@
-import connectDatabase from "./database";
-import loadExpressApp from "./express";
+const { connectDatabase } = require('./database');
+const loadExpressApp = require('./express');
 
-export default async (app) => {
+const initApp = async (app) => {
   await connectDatabase();
   loadExpressApp(app);
 };
+
+module.exports = initApp;

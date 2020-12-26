@@ -1,9 +1,9 @@
-import * as express from "express";
-import cors from "cors";
-import router from "../routes";
-import { NotFoundApi } from "../errors";
+const express = require('express');
+const cors = require('cors');
+const router = require('../routes');
+const { NotFoundApi } = require('../errors');
 
-export default (app) => {
+const loadExpressApp = (app) => {
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
@@ -19,3 +19,5 @@ export default (app) => {
     });
   });
 };
+
+module.exports = loadExpressApp;

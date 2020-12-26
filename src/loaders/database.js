@@ -1,8 +1,8 @@
-import { Sequelize } from "sequelize";
-import * as config from "../configs";
+const { Sequelize } = require('sequelize');
+const config = require('../configs');
 
 // connecting to a database
-export const sequelize = new Sequelize(
+const sequelize = new Sequelize(
   config.mysql.name,
   config.mysql.username,
   config.mysql.password,
@@ -19,11 +19,16 @@ export const sequelize = new Sequelize(
 );
 
 // test the connection
-export default async () => {
+const connectDatabase = async () => {
   try{
     await sequelize.authenticate();
   } catch (error) {
     console.log(`mysql connection error: ${error.message}`);
     process.exit(1);
   }
+};
+
+module.exports = {
+  sequelize,
+  connectDatabase
 };

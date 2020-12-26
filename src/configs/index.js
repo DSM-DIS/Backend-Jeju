@@ -2,7 +2,7 @@ const { config } = require('dotenv');
 
 config();
 
-export default {
+module.exports = {
   port: Number(process.env.SERVER_PORT),
   mysql: {
     host: process.env.DB_HOST,

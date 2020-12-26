@@ -1,7 +1,7 @@
-import User from "./user";
-import Diary from "./diary";
+const User = require('./user');
+const Diary = require('./diary');
 
-export {
+module.exports = {
   User,
   Diary
 };

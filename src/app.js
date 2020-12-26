@@ -1,10 +1,10 @@
-import express from "express";
-import * as config from "./configs";
-import initApp from "./loaders";
+const express = require('express');
+const initApp = require('./loaders');
+const { port } = require('./configs');
 
 const app = express();
 initApp(app);
 
-app.listen(config.port, () => {
-  console.log(`Server listing at ${config.port}`);
+app.listen(port, () => {
+  console.log(`Server listing at ${port}`);
 });
