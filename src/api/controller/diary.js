@@ -12,7 +12,7 @@ const getDiary = async (req, res, next) => {
 
     checkYourDiary(userId, diaryBookId);
 
-    const resData = await diaryService.getDiary(userId, diaryBookId);
+    const resData = await diaryService.getDiary(userId, diaryBookId, page);
     res.send(resData);
   } catch (error) {
     next(error);
