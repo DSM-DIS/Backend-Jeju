@@ -4,7 +4,7 @@ const config = require('../configs');
 // connecting to a database
 const sequelize = new Sequelize(
   config.mysql.name,
-  config.mysql.username,
+  config.mysql.user,
   config.mysql.password,
   {
     host: config.mysql.host,
