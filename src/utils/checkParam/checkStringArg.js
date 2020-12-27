@@ -7,6 +7,6 @@ const checkStringArg = (string) => {
     throw BadRequest;
   }
   return true;
-}
+};
 
 module.exports = checkStringArg;
