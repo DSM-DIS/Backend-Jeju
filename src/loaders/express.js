@@ -17,7 +17,7 @@ const loadExpressApp = (app) => {
       res.status(err.status);
       res.json({
         message: err.message
-      })
+      });
     } else {
       console.error(err);
       res.status(InternalServer.status);
