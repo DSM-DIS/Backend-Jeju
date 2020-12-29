@@ -11,7 +11,7 @@ const checkYourDiary = async (userId, diaryBookId) => {
   const res = await axios.get('/diary-book', {
     headers: { id: userId }
   });
-
+  console.log('경상: ', res);
   for (const diaryBook of res.diaryBooks) {
     if (diaryBook.id === diaryBookId) {
       return;
