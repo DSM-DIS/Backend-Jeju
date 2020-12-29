@@ -1,5 +1,6 @@
 const { BadRequest } = require('../../errors');
 const DiaryService = require('../../services/diary');
+const checkIntegerArg = require('../../utils/checkParam/checkIntegerArg');
 const { checkDiaryBook, checkOwner, checkContent } = require('../../utils');
 
 const diaryService = new DiaryService();
@@ -10,6 +11,7 @@ const getDiary = async (req, res, next) => {
     const diaryBookId = parseInt(req.params.id);
     const page = parseInt(req.params.page);
 
+    checkIntegerArg(page);
     await checkDiaryBook(userId, diaryBookId);
 
     const resData = await diaryService.getDiary(userId, diaryBookId, page);
@@ -26,7 +28,7 @@ const writingDiary = async (req, res, next) => {
     }
 
     const userId = req.headers.userId;
-    const diaryBookId = parseint(req.params.id);
+    const diaryBookId = parseInt(req.params.id);
     const { content } = req.body;
 
     await checkOwner(userId, diaryBookId);
