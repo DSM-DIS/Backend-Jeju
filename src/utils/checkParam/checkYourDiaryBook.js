@@ -8,7 +8,7 @@ const axios = Axios.create({
 });
 
 const checkYourDiary = async (userId, diaryBookId) => {
-  const res = await axios.get('/diary-book', {
+  const res = await axios.get('/repositories/diary-book', {
     headers: { userId: userId }
   });
   
