@@ -13,5 +13,10 @@ module.exports = {
   stringLen: {
     author: 12,
     content: 240
+  },
+  baseURL: {
+    dokdo: process.env.DOKDO_URL,
+    jeonju: process.env.JEONJU_URL,
+    gyeongsang: process.env.GYEONGSANG_URL
   }
 };
