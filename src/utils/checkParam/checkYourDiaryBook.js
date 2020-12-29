@@ -3,7 +3,7 @@ const { baseURL } = require('../../configs');
 const { ForbiddenDiaryBook } = require('../../errors');
 
 const axios = Axios.create({
-  baseUrl: baseURL.gyeongsang,
+  baseURL: baseURL.gyeongsang,
   timeout: 1000
 });
 
