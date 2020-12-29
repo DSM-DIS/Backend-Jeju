@@ -7,6 +7,7 @@ const diaryService = new DiaryService();
 
 const getDiary = async (req, res, next) => {
   try {
+    console.log(req.headers);
     const userId = req.headers.userId;
     const diaryBookId = parseInt(req.params.id);
     const page = parseInt(req.params.page);
