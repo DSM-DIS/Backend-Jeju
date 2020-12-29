@@ -15,3 +15,5 @@ const checkYourDiary = async (userId, diaryBookId) => {
   }
   throw ForbiddenDiaryBook;
 };
+
+module.exports = checkYourDiary;
