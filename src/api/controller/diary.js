@@ -7,8 +7,7 @@ const diaryService = new DiaryService();
 
 const getDiary = async (req, res, next) => {
   try {
-    console.log(req.headers);
-    const userId = req.headers.userId;
+    const userId = req.headers.userid;
     const diaryBookId = parseInt(req.params.id);
     const page = parseInt(req.params.page);
 
@@ -28,7 +27,7 @@ const writingDiary = async (req, res, next) => {
       throw BadRequest;
     }
 
-    const userId = req.headers.userId;
+    const userId = req.headers.userid;
     const diaryBookId = parseInt(req.params.id);
     const { content } = req.body;
 
