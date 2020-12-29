@@ -10,7 +10,7 @@ const getDiary = async (req, res, next) => {
     const diaryBookId = parseInt(req.params.id);
     const page = parseInt(req.params.page);
 
-    checkDiaryBook(userId, diaryBookId);
+    await checkDiaryBook(userId, diaryBookId);
 
     const resData = await diaryService.getDiary(userId, diaryBookId, page);
     res.send(resData);
@@ -29,7 +29,7 @@ const writingDiary = async (req, res, next) => {
     const diaryBookId = parseint(req.params.id);
     const { content } = req.body;
 
-    checkOwner(userId, diaryBookId);
+    await checkOwner(userId, diaryBookId);
     checkContent(content);
 
     await diaryService.writingDiary(userId, diaryBookId, content);
