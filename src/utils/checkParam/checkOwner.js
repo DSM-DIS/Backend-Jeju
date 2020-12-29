@@ -1,14 +1,13 @@
 const axios = require('axios').default;
 const { ForbiddenDiaryBook } = require('../../errors');
-const { checkUser, httpErrorHandler } = require('../');
+const checkDiaryBook = require('./checkDiaryBook');
 
 const checkOwner = async (userId, diaryBookId) => {
-  checkUser(userId, diaryBookId);
+  // diaryBookId error handler
+  await checkDiaryBook(diaryBookId);
 
   const res = await axios.get(`/repositories/diay-books/${diaryBookId}`);
-  httpErrorHandler(res.status, res.cause);
-
-  if (userId !== res.owner) {
+  if (res.owner !== res.userId) {
     throw ForbiddenDiaryBook;
   }
 };
