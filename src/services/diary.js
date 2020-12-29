@@ -1,7 +1,11 @@
-const axios = require('axios').default;
-const { stringLen } = require('../configs');
-const errors = require('../errors');
+const Axios = require('axios').default;
+const { baseURL } = require('../configs');
 const { httpErrorHandler } = require('../utils');
+
+const axios = Axios.create({
+  baseURL: baseURL.dokdo,
+  timeout: 1000
+});
 
 class DiaryService {
   async getDiary(userId, diaryBookId, page) {
