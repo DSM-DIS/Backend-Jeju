@@ -1,6 +1,6 @@
 const { BadRequest } = require('../../errors');
 
-const checkIntegerArg = (num) => {
+const checkIntegerArg = async (num) => {
   const isFloatExp = /[*.*]/;
 
   if (isNaN(num) && isFloatExp.test(num) && num < 1) {
