@@ -1,6 +1,6 @@
 const { BadRequest } = require('../../errors');
 const DiaryService = require('../../services/diary');
-const { checkYourDiary, checkOwner, checkContent } = require('../../utils');
+const { checkDiaryBook, checkOwner, checkContent } = require('../../utils');
 
 const diaryService = new DiaryService();
 
@@ -10,7 +10,7 @@ const getDiary = async (req, res, next) => {
     const diaryBookId = parseInt(req.params.id);
     const page = parseInt(req.params.page);
 
-    checkYourDiary(userId, diaryBookId);
+    checkDiaryBook(userId, diaryBookId);
 
     const resData = await diaryService.getDiary(userId, diaryBookId, page);
     res.send(resData);
