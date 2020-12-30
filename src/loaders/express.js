@@ -19,9 +19,9 @@ const loadExpressApp = (app) => {
         message: err.message
       });
     } else {
+      console.error('Jeju Server error');
       console.error(err);
-      res.status(InternalServer.status);
-      res.json({
+      res.status(500).json({
         message: InternalServer.message
       });
     }
