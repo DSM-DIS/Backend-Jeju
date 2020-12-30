@@ -9,7 +9,7 @@ const axios = Axios.create({
 
 class DiaryService {
   async getDiary(userId, diaryBookId, page) {
-    const res = await axios.get(`/diary-book/${diaryBookId}?page=${page}`, {
+    const res = await axios.get(`/diary-book/${diaryBookId}/page/${page}`, {
       headers: {
         userId: userId
       }
