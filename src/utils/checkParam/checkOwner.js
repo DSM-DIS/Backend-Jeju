@@ -13,7 +13,7 @@ const checkOwner = async (userId, diaryBookId) => {
   await checkDiaryBook(diaryBookId);
 
   const res = await axios.get(`/diay-books/${diaryBookId}`);
-  if (res.owner !== res.userId) {
+  if (res.owner !== res.data.userId) {
     throw ForbiddenDiaryBook;
   }
 };
