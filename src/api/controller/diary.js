@@ -17,16 +17,14 @@ const getDiary = async (req, res, next) => {
     const resData = await diaryService.getDiary(userId, diaryBookId, page);
     res.send(resData);
   } catch (error) {
+    console.log('getDiary controller error');
+    console.error(error);
     next(error);
   }
 };
 
 const writingDiary = async (req, res, next) => {
   try {
-    if (!Object.keys(req.body).length) {
-      throw BadRequest;
-    }
-
     const userId = req.headers.userid;
     const diaryBookId = parseInt(req.params.id);
     const { content } = req.body;
@@ -37,6 +35,8 @@ const writingDiary = async (req, res, next) => {
     await diaryService.writingDiary(userId, diaryBookId, content);
     res.status(201).send();
   } catch (error) {
+    console.log('writingDiary controller error');
+    console.error(error);
     next(error);
   }
 };
