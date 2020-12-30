@@ -14,7 +14,7 @@ class DiaryService {
         userId: userId
       }
     });
-    httpErrorHandler(res.status, res.cause);
+    httpErrorHandler(res.status, res.data.cause);
     
     return {
       page: res.page,
@@ -29,7 +29,7 @@ class DiaryService {
       content
     });
 
-    httpErrorHandler(res.status, res.cause);
+    httpErrorHandler(res.status, res.data.cause);
   }
 }
 
