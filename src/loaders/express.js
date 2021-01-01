@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const router = require('../api/routes');
 const { NotFoundApi, InternalServer } = require('../errors');
+const logger = require('./logger');
 
 const loadExpressApp = (app) => {
   app.use(cors());
@@ -13,18 +14,14 @@ const loadExpressApp = (app) => {
     next(NotFoundApi);
   });
   app.use((err, req, res, next) => {
-    if (err.status && err.status !== 500) {
-      res.status(err.status);
-      res.json({
-        message: err.message
-      });
-    } else {
-      console.error('Jeju Server error');
-      console.error(err);
-      res.status(500).json({
-        message: InternalServer.message
-      });
-    }
+    logger.error(
+      `message: ${err.message}, status: ${err.status}, cause: ${err.cause}`
+    );
+    res.staus(err.status || 500);
+    res.json({
+      message: err.message,
+      cause: err.cause
+    });
   });
 };
 
