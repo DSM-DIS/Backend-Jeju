@@ -40,7 +40,7 @@ const logger = winston.createLogger({
   ]
 });
 
-logger.add(new winston.transport.Console({
+logger.add(new winston.transports.Console({
   format: combine(
     winston.format.colorize(),
     winston.format.simple()
