@@ -17,8 +17,7 @@ const loadExpressApp = (app) => {
     logger.error(
       `message: ${err.message}, status: ${err.status}, cause: ${err.cause}`
     );
-    res.staus(err.status || 500);
-    res.json({
+    res.status(err.status || 500).json({
       message: err.message,
       cause: err.cause
     });
