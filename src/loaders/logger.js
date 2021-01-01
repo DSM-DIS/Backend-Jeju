@@ -1,8 +1,13 @@
 const winston = require('winston');
 const winstonDaily = require('winston-daily-rotate-file');
+const fs = require('fs');
 
 const logDir = '../../.logs';
 const { combine, timestamp, printf } = winston.format;
+
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir);
+}
 
 const logFormat = printf((info) => {
   return `${info.timestamp} ${info.level}: ${info.message}`;
