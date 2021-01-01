@@ -1,4 +1,3 @@
-const { BadRequest } = require('../../errors');
 const DiaryService = require('../../services/diary');
 const checkIntegerArg = require('../../utils/checkParam/checkIntegerArg');
 const { checkDiaryBook, checkOwner, checkContent } = require('../../utils');
